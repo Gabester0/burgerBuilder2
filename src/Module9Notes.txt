@@ -1,0 +1,57 @@
+////////////////////////////////////////////////////////////
+///  Module 9: Lesson 172: Making post requests to Axios ///
+////////////////////////////////////////////////////////////
+
+So we set up our firebase account address as the base URL in the last lectures.  
+
+And we created a file in the root src folder called axios-orders.js.  
+
+So now we want to send our burger order info to our Firebase account.  We will want to 
+use a Post Request header.  
+
+With firebase we need to add .json at the end of the item we are sending.  
+Firebase stores what is sent to it in json-like structures.  
+
+With firebase you can simply send your post requests to nodeNameOfYourChoice.json.  If 
+you don't have an existing node to send to firebase will create it upon receipt of the request.
+
+
+The actual code consists of a order json object that will include information from 
+state.  (Side Note: in production code you want to be sure that your product info is stored
+on the server and you calculate all your pricing info and all on the server.  This ensures 
+that the usuer isn't manipulating the order data or code to cheat the system.)
+
+And axios.post() in the post call we include '/directoryNodeOfChoice.json' thus telling Axios
+where to send it to.  
+
+Then we will include some temporary dummy data for customer.
+
+We pass this object as a second argument in the post request.  
+
+
+
+////////////////////////////////
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Diff Checker Complete
+    [] package.json
+    [] index.js
+    [] App.js
+        [] containers
+            [] BurgerBuilder
+                [] BurgerBuilder.js
+            [x] Checkout
+                [x] Checkout.js
+                [x] ContactData
+                    [x] ContactData.js
+            [x] Orders
+                [x] Orders.js
+            [x] Store
+                [x] actions
+                    [x] orders
+                    [x] actionTypes
+                    [x] burgerBuilder
+                    [x]index.js
+                [x] reducer
+                    [x] burgerBuilder
+                    [x] orders
+                [x] utility.js

@@ -1,0 +1,540 @@
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 111 : Setting Up the Project  \\
+/////////////////////////////////////////////////////////////////////
+
+So First we head to the general folder we want our project to be located: BurgerBuilder
+using the command line
+
+Then we run npx create-react-app burgerbuilder (name but must be all lowercase)
+(See Create-React-App Gitghub page for instructions)
+
+Then when we want to enable CSS Modules so we run react-scripts eject
+Say yes, we want to eject
+Now when node finishes running we go to config/ webpack.config.dev.js
+
+Hit ctrl-F and search for css-loader and then add this code to this:
+
+                  modules: true,
+                  localIdentName: '[name]__[local]__[hash:base64:5]'
+
+Then we copy these two added lines,
+got to webpack.config.prod.js and repeat these 2 steps.
+Then Save!
+
+Now we are set up for CSS Modules 
+
+Now we can clean up a little
+    Delete  -Logo.svg 
+            -import statement for logo in App.js
+            -The JSX inside the root div tags in App.js 
+            -and className for root div 
+            -App.css import statement
+            -App.css file also.  
+
+Also we want to change the font we use from sans-serif to open sans 
+We will find it in google fonts and copy the cdn link  into the index.html file (inside public)
+just above the title tags 
+
+And we will change the title to MyBurger.  
+And it is time to move on!
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 112 : Creating a Layout Component  \\
+/////////////////////////////////////////////////////////////////////
+
+So now we are going to start building the project!
+
+First we are going to add 2 folders to the src folder: components and containers
+
+Remember: containers are basically stateful components and components are stateless components
+that are ususally functional.  
+
+The components and containers folders are a classic set-up in React.  They can be thought of
+as the 2 primary branches of the app.  
+
+Other typical folders are assets and redux, which we haven't touched yet.  
+
+We will add assets folder to src,
+    and we will add Layout folder, and Layout.js to components since Layout is, for now at 
+    least, stateless.  
+
+Since this is a stateless functional comp we will store the function in a const layout 
+and we will make the value an arrow function.  
+
+So now we will write some of this Layout.js file.  
+
+We will import React from react
+
+Then inside the arrow function we will return a div with the text Toolbar, SideDrawr,
+and Backdrop to represent what components we will later make and use here.  
+
+Then we will use the standard HTML tags main 
+    then inside these tags { props.children }.
+
+So this is good, but we are getting an error.
+        why?
+because we have 2 adjacent divs.  We need a root div 
+
+So we could:
+    -a) write an array that contians both of these and then map the array. 
+    -b) Wrap both of these to elements in a root div tag.
+    -c) or we could Write an HOC that returns these.  
+
+We will go with option C.
+
+We will make a Auxilliary.js file.  (video uses Aux.js but we don't want to do that in Windows)
+We will create  a folder inside containers called hoc because the HOCs are just going to return
+children.  
+This file will just consist of const auxilliary = (props)=> props.children; 
+and then we export default auxilliary;
+
+Now we can import Auxilliary into Layout.js using capitol A as we do for all custom components 
+that we create.  
+Note that we don't (at the end of the file path) type .js because our build process will 
+automatically add .js for all javascript files.  
+
+Now in Layout.js we add Auxilliary tags around all our JSX.
+    Make sure we pass props as an argument to our layout function   
+        and then we export default layout 
+
+Now we are ready to use Layout 
+We could go to the index.js file and import and use the Layout component as our root component.
+While this is a valid option, we aren't going to do that. 
+This way, if we want to , we can add some state to the root component or conditionally render
+ different layouts we could do that.  
+
+So we just use single dot (to stay in the same level/folder) instead of 2 dots (to go up a 
+whole level/folder) like this: 
+        import Layout from './components/Layout/Layout';
+
+Now we will just add layout tags inside the empty div.
+    And add <p>Test</p> to test it out.  
+
+And we will quickly add our font in the index.css file as our preferred choice.  
+
+And moving on.  
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 113 : Starting implementation of BurgerBuilder  \\
+/////////////////////////////////////////////////////////////////////
+
+Steps we are taking:
+
+    -Add BurgerBuilder folder and .js file inside containers
+
+    -make it a class extends Component because it will be stateful
+
+    -Put 2 divs inside with Burger and Build Controls text 
+
+    -export and use in App 
+
+    -Adding simple styling.  
+
+    -Create a Layout.css file and a class to give the elements margin.
+
+    -And we import classes from './Layout.css' 
+
+    -And add a className property to our main tags.  
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 114 : Adding a Dynamic Ingredient Component  \\
+/////////////////////////////////////////////////////////////////////  
+
+This Lecture:
+    -Adding a Burger folder to components folder for all Burger items/files 
+
+    -It is important to have a logical folder structure that is organizing and logical 
+        when you are working in React.  In React projects there are a lot of granular files
+        and organization will help.  
+            It is a good rule of thumb to always have an initial split of componens & containers
+                And then within those to have folders that mirror the features of the project
+
+    -So in that trend we will add a Burger.js file to the folder we just made
+     
+    -We add a BurgerIndredient folder and a BurgerIndredient.js file to that. 
+
+    -We may need to add files like Lettuc/Salad, Meat, etc.  
+
+    -He has a file of CSS images representing the burger ingredients.  We will save this 
+        as BurgerIndredient.css inside the folder with same name.  
+    
+    -So now in BurgerIndredient.js we create a functional component and save it to the const
+        burgerIngredient.
+
+    -Import React and export default burgerIngredient
+
+    -Now we are going to need some logic to determine which ingredients to return.  
+
+    -First we are going to define a ingredients const and set its value to null
+
+    -and we will use a switch statement for the js logic.  
+        -And we will pass props.type as an argument so we can analyze the type of contents
+
+    -And we need to import BurgerIngredient.css classes to start using them
+
+    -Then we populate our switch statement with a case for each ingrdient.  
+
+    -And we simply state case:
+     (' ingredientName') : ingredient = <div className={classes.ingredientName}></div>
+    
+    And we repeat that for all the main ingredients 
+
+    With Bread-top we enclose two child divs which are given Seeds1 and Seeds2 classes.  
+
+    Then we assign a default: case of ingredient = null;
+
+    And then outside the switch statement we return ingredient 
+
+And moving on:
+
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 114 : Using Proptypes to validate types  \\
+/////////////////////////////////////////////////////////////////////  
+
+So first we will:
+    -Import PropTypes (from 'prop-types') package into our App.js file
+
+    -Now to use this we need to change const to class to use the PropTypes
+    
+    -Now this isn't going to change the fact that it is a stateless/dumb component.  
+        -just the terminology.
+
+    -We don't necessarily determine whether a component is a functional or stateful by 
+        whether or not it is declared with the Class keyword or function terminology.  
+    
+    -It is just often done that way.  
+
+    -Don't forget the naming convention is that a component is lowercase if it is a function 
+        and it is capitol if it is class extends Component
+
+    -And we don't need (props) because Class declared variables have access to Props.  
+
+    -And we need to add the render(){ } statement.  
+
+    -Then we move all the code inside the render tag
+
+    -And we add , { Component } to our React import statement 
+
+    -Change props.type at the start of the switch statement to this.props.type (Stateful now)
+
+    -And Now after the render tag is closed we create Props Validation:
+
+    -BurgerIndredient.propTypes = {} using lowercase p. 
+
+    -and then inside type: PropTypes.string.isRequired 
+
+    Thus requiring that the proptype must always be string.  
+
+And on to 116:
+
+
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 116 : Building the Burger!      \\
+/////////////////////////////////////////////////////////////////////
+
+So now we will start working on the Burger.js file:
+
+    -So this will be a function component so a lowercase b 
+
+    -const burger = (props)=>{ }
+
+    -we will return a div which will contain all burgerIngredient 
+
+    - the div will allow us to set the actual size of the burger ingredients
+
+    -and we will export default burger 
+
+    -Now we will create an adjacent Burger.css file
+
+    -give it a .Burger class and set width 100%, margin auto, height limited (250px?), and overflow to scroll
+
+    -this way if we build a really big burger we can scroll to see all of it.  
+
+    -And we will also set text-align: center, font-weight: bold, and text-size: 1.2 rem 
+
+    -And we will add a media query for min-width 1000px and min-height 700px
+
+    -and set Burger width: 700px height: 600px
+
+    -And we will set another smaller media query as well
+
+    -Once we are finished setting media queries we will import classes into Burger.js
+
+    -And assign the .Burger class as the className to the div.
+
+    -now we can start adding ingredients
+
+    -First we import BurgerIndredient 
+
+    -And then use BurgerIndredient as  a self-closing tag inside the div.  
+
+    -We have four BurgerIngredient components
+
+    -With type="string" we determine which Burger Parts are which.  
+
+    -Having built a burger we head to the BurgerBuilder.js file to render it
+
+    -There we first import Burger.js  
+
+    -Now we just replace our first dummy div with a <Burger tag>
+
+    -Now when we launch the app we have a visual burger.
+
+    -It is hard coded though which isn't great.
+
+    -But it is a start
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 117 :  Handling Burger Ingredients via State \\
+/////////////////////////////////////////////////////////////////////
+
+
+So we can use the classic syntax to initialize state:
+    constructor(props){
+        super(props);
+        this.state={
+
+        }
+    }
+
+But we are going to go the more modern and shorter syntax of state={ }
+
+    -And we are going to start with ingredients: {js object}
+    -And then assign ingredients with key(string): value(quantity) pairs
+
+    -Now we have ingredietns in state
+
+    -so now we want to pass this to the Burger
+
+    -So to do this we look at Burger.js 
+
+    -We can't use the map method because ingredients in state aren't an array
+
+    -So we need to transform the object in state into an array.  
+
+    -So we are going to make a constant called transformedIngredients inside the Burger 
+
+    -Then we are going to assign the Global Object as the value and then apply some methods to it
+
+    -So first the keys object with .keys( )
+
+    -And then we will say to extract the keys from props.ingredients (and then when we use this
+    Burger component in BurgerBuilder we will assign state as the props value)
+
+    -And we will also chain .map() method to it also (because the keys method returns to us
+        an array)
+
+    -So the map function executes a function we are about to define on each element in the
+        arry.  Because all our elements are ingredients and the keys for them we will give
+        them the name igKey for ingredient key
+    
+    -Too confusing to take notes on.  Watch video from 5:14 to end if notes are needed.
+note: 
+    -was missing ingredients={this.state.ingredients} inside burger tag in BurgerBuilder    
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 118 : Adding Ingredient Sums Dynamically     \\
+/////////////////////////////////////////////////////////////////////
+
+
+
+Last Lecture we got our app to render burger ingredients based on what is in state.  
+
+    -What if we have no ingredients in state yet? 
+
+    -We want to show a message to start adding indredients then. 
+
+    -So we set state/ingredients to zero in BurgerBuilder
+
+    -and then in Burger.js we console.log transformedIngredients and we get this
+        Array(4)0: []1: []2: []3: []length: 4__proto__: Array(0)
+    
+    -an Empty Array.  four of them.
+
+    - so if we checked the length of transformedIngredients we would get 4
+
+    -but that is the same result as if we checked length when we had 2 of every ingredient
+
+    -Because the ingredients in inside arrays inside the array.  
+
+    -So we need to consolidate or reduce them
+
+    -There is a method for that, the reduce method!
+
+    -Reduce is a built in array function
+
+    -allows us to transform an array
+
+    -It receives a function as input which receives 2 arguments
+        ex:
+            .reduce(    (arr,       el),        [])
+                      arg1/\     arg2/\     an in/\
+                    prev. value curr. value itial value 
+
+    -What the reduce method does is loop through all the elements and add them to the 
+        initial value step by step.  
+
+    -And now after the reduce method we have one-level-deep ingredient array that we can
+        check the length of and dynamically render things based on 
+    so if (transformedIngredients === 0 ){ then we prompt to add ingredients}
+
+    -and We will changed the transformedIngredients from const to let (because otherwise
+    our changing the array wouldn't do anything.  ) 
+
+    -and now if ingredients = 0 we will write this:
+        transformedIngredients = <p>Please start adding ingredients!</p>           
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 119 : Adding Build Controls                \\
+/////////////////////////////////////////////////////////////////////
+
+First we will add A new subfolder to Components and call it BuildControls
+
+    -And we will add BuildControls.js file 
+
+    -It will be a functional component so we will define it as a function stored in the 
+        const buildControls 
+    
+    -We import React and export default buildControls
+
+    -And we put a div inside the functions return statement
+    
+    -add a BuildControls.css file with a .BuildControls css ruleset and give the Controls
+        some style.  
+
+    -Now: For actual build Controls:  We will probably want to outsource this component to
+        make this it reuseable
+
+    -So we will add a BuildControl folder, a BuildControl.js file, and a BuildControl.css file
+
+    -So we will create BuildControl.js just like BuildControls.  Functional, will rcv props
+
+    -Inside we will use a div for wrapping and for styling.  
+
+    -And then inside this we will have a div that will dynamically return text
+        -because this is a button label we will assign it the name label {props.label}
+
+    -Then 2 button tags labelled Less and More to adjust ingredients up or down in quantity
+
+    -
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 120 : Outputting multiple Build Controls   \\
+/////////////////////////////////////////////////////////////////////
+
+
+So first of all:
+
+    -We want to create an array of js objects for each ingredient
+
+    -Each ingredient object will have label which is how we want the label text written
+        with a capitol letter, etc.  
+    -And a type which should character by character match the switch statement cases 
+
+    -And we will import classes from BuildControl.css add the class to the div inside the return
+
+    -And we will import BuildControl singular
+
+    -and we will map our contorls array to return all our Controls
+
+    -And we will render a BuildControl component for each object in the controls array.
+
+    -We can use the label as the key for each one since we won't repeat a label.  
+
+-Now we jumb to our BurgerBuilder.js file. 
+
+    -import BuildControls 
+
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 121 : Connecting State to BuildControls   \\
+/////////////////////////////////////////////////////////////////////
+
+Typically you name constants that you want to use as global constants with all capitol letters.
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 127 : Adding Backdrop   \\
+/////////////////////////////////////////////////////////////////////
+
+You may return null in a functional element.  This just results in nothing being rendered.
+(ex:    const funcElement = (props) => {
+                                props.show ? <div>props.children</div> : null   })
+
+/////////////////////////////////////////////////////////////////////
+//  Module 8 : Lesson 132 : Using a Burger Logo with Webpack   \\
+/////////////////////////////////////////////////////////////////////
+
+We are using the BurgerLogo we downloaded
+
+    We stored it inside the src folder / assets / images / burger-logo.  
+
+        We are using the Logo.js file to display this logo.
+
+            This is a functional component.  
+
+                Now traditional development experience would tell us to simply have a folder 
+                    where images are saved and then when we need an image we reference its 
+                    location in the folder under src attribute of this image.
+
+                        But we just using the current folder structure for development.  when
+                        we run the build function Webpack is going to condense and rearrange
+                        all of our code and the assets/images folder will disappear.  The contents
+                        will still be accessible but only Webpack will know where to look for
+                        them.  So we want to be sure Webpack knows about our image, so we will 
+                        import the image into our Logo.js file.  This way webpack can find it.  
+    
+//////////////////////////////////////////////////////////////////////////
+//Module 8 : Lesson 142 :Improving our Application: Prop-Type Validation\\
+//////////////////////////////////////////////////////////////////////////
+
+Right now in our project we aren't using prop-type validation in any of our components other
+than in burgerIngredients file.  There we do set the type.  Because it is set it is required.  
+And then we are validating that the prop-type is a string. 
+
+Some factors that affect this choice:
+    -We aren't working with anyone else on this project.  Just Max and the student.  
+
+    -We aren't working on a team with other developers.
+
+    -We aren't working on a project that will be in a library that will be used by other people.  
+
+Therefore Props used incorrectly isn't a great concern for anyone.  If we do use prop-types incorrectly
+we will get a logical error until we fix it.  
+
+No reason here not to use prop-type validation.  But there aren't any good reasons to go to that 
+effort and do that here.  
+
+But keep in mind that to implement proptype validation you will need to convert functions from functional 
+to stateful/class-based components.  
+
+It is good form to keep as many of your components as possible stateless/functional.  
+
+//////////////////////////////////////////////////////////////////////////
+//   Module 8 : Lesson 143: Improving our Application: Performance   \\
+//////////////////////////////////////////////////////////////////////////
+
+So if we look at our app.  One thing to think about and look at is do we re-render unecessarily?  
+
+For the most part we only re-render when we change the UI which is a justifiable reason.  
+
+And if we wanted to use Component Lifecycle hooks to prevent any unecessary re-rendering we would need to use 
+Class components instead of functional components which would be less efficient and performant.  
+
+The one area where this isn't true and we re-render needlessly is in BurgerBuilder.js file
+where the Modal.js wraps the OrderSummary.  This means that every time the ingredients 
+change the order summary is re-rendered.  But unless the modal is displayed this isn't 
+helpful.  
+
+So first we need to add a Lifecycle hook to OrderSummary to know when it is being 
+re-rendered.  
+
+So we first re-write OrderSummary as a class component.  
+
+That done we add the componentWillUpdate method with a simple console.log inside.  
+
+Now we see that every single time an ingredient is added or removed the component will update.
+
+But modal isn't even visible!
+
