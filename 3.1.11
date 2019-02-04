@@ -1,0 +1,4 @@
++ webpack-dev-server@2.11.3
+added 137 packages from 62 contributors, removed 2 packages, updated 4 packages and audited 11854 packages in 16.664s
+found 45 vulnerabilities (33 low, 9 moderate, 3 high)
+  run `npm audit fix` to fix them, or `npm audit` for details
