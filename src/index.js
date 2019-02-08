@@ -17,10 +17,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__ || compose
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
     order: orderReducer,
-    auth: authReducer,
+    auth: authReducer
 });
 
-const store = createStore(rootReducer, composeEnhancers( applyMiddleware( thunk ) ) );
+const store = createStore(rootReducer, composeEnhancers(
+    applyMiddleware(thunk)
+));
     
 const app = (
     <Provider store={store}>
