@@ -61,21 +61,3 @@ export const auth = (email, password, isSignUp) => {
         });
     };
 };
-
-/*
-
-Set these as the rules for the firebase database:
-
-{
-    "rules": {
-        "ingredients"{
-            ".read": true,
-            ".write: true",
-        },
-        "orders": {
-            ".read": auth != null,
-            ".write": auth != null,
-        }
-    }
-}
-*/
