@@ -1,6 +1,15 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
 
+/* Add to rules in firebase
+    orders:
+
+    ,
+    ".indexOn": ["userId"]
+
+    & publish
+    */
+
 export const purchaseBurgerSuccess = (id, orderData) =>{
     return {
         type: actionTypes.PURCHASE_BURGER_SUCCESS,
@@ -62,10 +71,11 @@ export const fetchOrdersStart = () => {
     };
 };
 
-export const fetchOrders = (token) =>{
+export const fetchOrders = (token, userId) =>{
     return dispatch =>{
         dispatch(fetchOrdersStart());
-        axios.get('/orders.json?auth=' + token)
+        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+        axios.get('/orders.json' + queryParams)
         .then(res=>{
             const fetchedOrders = [];
             for(let key in res.data){
