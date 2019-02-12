@@ -9,19 +9,21 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 import App from './App';
 import burgerBuilderReducer from './store/reducer/burgerBuilder';
-import orderReducer from './store/reducer/order'
+import orderReducer from './store/reducer/order';
+import authReducer from './store/reducer/auth';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__ || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
     order: orderReducer,
+    auth: authReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
-    
+
 const app = (
     <Provider store={store}>
         <BrowserRouter>
